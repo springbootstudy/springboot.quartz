@@ -29,8 +29,7 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 @Configuration
 public class QuartzConfig2 {
 	
-	@Bean
-    public Properties quartzProperties() throws IOException {
+    private Properties quartzProperties() throws IOException {
         PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
         propertiesFactoryBean.setLocation(new ClassPathResource("/quartz.properties"));
         //在quartz.properties中的属性被读取并注入后再初始化对象

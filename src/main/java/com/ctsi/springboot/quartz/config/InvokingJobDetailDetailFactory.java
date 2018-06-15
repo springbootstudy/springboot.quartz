@@ -2,11 +2,22 @@ package com.ctsi.springboot.quartz.config;
 
 import java.lang.reflect.Method;
 
+import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
+/**
+ * 
+ * @author lb
+ *
+ * @since 2018年6月15日
+ *
+ * @Copyright 软件共享研发中心
+ *
+ */
+@DisallowConcurrentExecution
 public class InvokingJobDetailDetailFactory extends QuartzJobBean {
 
 	// 计划任务所在类
