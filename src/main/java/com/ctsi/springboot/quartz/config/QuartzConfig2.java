@@ -9,8 +9,10 @@ import org.quartz.Job;
 import org.quartz.JobDetail;
 import org.quartz.Trigger;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
@@ -24,94 +26,16 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
  * @Copyright 软件共享研发中心
  *
  */
-//@Component
-//@Configuration
-public class QuartzConfig {
+@Configuration
+public class QuartzConfig2 {
 	
-	@Value("${org.quartz.scheduler.instanceName}")
-	private String instanceName;
-	
-	@Value("${org.quartz.scheduler.instanceId}")
-	private String instanceId;
-	
-	@Value("${org.quartz.threadPool.class}")
-	private String tpClass;
-	
-	@Value("${org.quartz.threadPool.threadCount}")
-	private String tpThreadCount;
-	
-	@Value("${org.quartz.threadPool.threadPriority}")
-	private String tpThreadPriority;
-	
-	@Value("${org.quartz.jobStore.misfireThreshold}")
-	private String jsMisfireThreshold;
-	
-	@Value("${org.quartz.jobStore.class}")
-	private String jsClass;
-	
-	@Value("${org.quartz.jobStore.driverDelegateClass}")
-	private String jsDriverDelegateClass;
-	
-	@Value("${org.quartz.jobStore.useProperties}")
-	private String jsUseProperties;
-	
-	@Value("${org.quartz.jobStore.dataSource}")
-	private String jsDataSource;
-	
-	@Value("${org.quartz.jobStore.tablePrefix}")
-	private String jsTablePrefix;
-	
-	@Value("${org.quartz.jobStore.isClustered}")
-	private String jsIsClustered;
-	
-	@Value("${org.quartz.jobStore.clusterCheckinInterval}")
-	private String jsClusterCheckinInterval;
-	
-	@Value("${org.quartz.dataSource.myDS.driver}")
-	private String dbDriver;
-	
-	@Value("${org.quartz.dataSource.myDS.URL}")
-	private String dbUrl;
-	
-	@Value("${org.quartz.dataSource.myDS.user}")
-	private String dbUser;
-	
-	@Value("${org.quartz.dataSource.myDS.password}")
-	private String dbPassword;
-	
-	@Value("${org.quartz.dataSource.myDS.maxConnections}")
-	private String dbMaxConnections;
-	
-	@Value("${org.quartz.dataSource.myDS.validationQuery}")
-	private String dbValidationQuery;
-	
-	private Properties quartzProperties() throws IOException {
-        Properties prop = new Properties();
-        prop.put("quartz.scheduler.instanceName", instanceName);
-        prop.put("org.quartz.scheduler.instanceId", instanceId);
-         
-        prop.put("org.quartz.jobStore.class", jsClass);
-        prop.put("org.quartz.jobStore.driverDelegateClass", jsDriverDelegateClass);
-        prop.put("org.quartz.jobStore.useProperties", jsUseProperties);
-        prop.put("org.quartz.jobStore.dataSource", jsDataSource);
-        prop.put("org.quartz.jobStore.tablePrefix", jsTablePrefix);
-        prop.put("org.quartz.jobStore.isClustered", jsIsClustered);
-         
-        prop.put("org.quartz.jobStore.clusterCheckinInterval", jsClusterCheckinInterval);
-        prop.put("org.quartz.jobStore.misfireThreshold", jsMisfireThreshold);
-         
-        prop.put("org.quartz.threadPool.class", tpClass);
-        prop.put("org.quartz.threadPool.threadCount", tpThreadCount);
-        prop.put("org.quartz.threadPool.threadPriority", tpThreadPriority);
-         
-        prop.put("org.quartz.dataSource.myDS.driver", dbDriver);
-        prop.put("org.quartz.dataSource.myDS.URL", dbUrl);
-        prop.put("org.quartz.dataSource.myDS.user", dbUser);
-        prop.put("org.quartz.dataSource.myDS.password", dbPassword);
-        prop.put("org.quartz.dataSource.myDS.maxConnections", dbMaxConnections);
-        prop.put("org.quartz.dataSource.myDS.validationQuery", dbValidationQuery);
-         
-        return prop;
+	@Bean
+    public Properties quartzProperties() throws IOException {
+        PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
+        propertiesFactoryBean.setLocation(new ClassPathResource("/quartz.properties"));
+        //在quartz.properties中的属性被读取并注入后再初始化对象
+        propertiesFactoryBean.afterPropertiesSet();
+        return propertiesFactoryBean.getObject();
     }
 	
 	@Bean 
