@@ -9,4 +9,7 @@ CREATE TABLE `t_task` (
 
 # task_status enable(启用) disable(禁用) 两种状态
 
+http://localhost:8087/addTask?name=a&cron=0/3 * * * * ?&status=enable
+http://localhost:8087/addTask?name=a&cron=0/3%20*%20*%20*%20*%20?&status=enable
+
 

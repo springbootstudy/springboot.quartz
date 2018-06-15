@@ -19,6 +19,13 @@ public class TaskImpl implements TaskSpi {
 	@Override
 	public void addTask(Task task) {
 		log.info("## " + scheduler);
+		
+		// 1.数据存储到数据库中
+		
+		// 2.配置 quartz 相关
+		
+		
+		
 	}
 
 }

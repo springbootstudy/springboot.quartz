@@ -13,7 +13,7 @@ public class PrintImpl implements PrintSpi {
 
 	@Override
 	public PrintParam print(PrintParam param) {
-		log.info("## servie impl exec" );
+		log.info("## service impl exec" );
 		
 		return null;
 	}
