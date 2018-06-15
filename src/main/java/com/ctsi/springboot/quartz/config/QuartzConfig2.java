@@ -7,7 +7,7 @@ import java.util.Properties;
 
 import org.quartz.Job;
 import org.quartz.JobDetail;
-import org.quartz.Trigger;
+import org.quartz.Scheduler;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
@@ -38,8 +38,7 @@ public class QuartzConfig2 {
     }
 	
 	@Bean 
-	public SchedulerFactoryBean schedulerFactoryBean(
-			@Qualifier("dialogJobTrigger") Trigger cronJobTrigger)
+	public SchedulerFactoryBean schedulerFactoryBean()
 			throws IOException {
 		
         SchedulerFactoryBean factory = new SchedulerFactoryBean(); 
@@ -56,12 +55,17 @@ public class QuartzConfig2 {
         factory.setApplicationContextSchedulerContextKey("applicationContext");
         
         //注册触发器 
-        factory.setTriggers(cronJobTrigger); 
+//        factory.setTriggers(cronJobTrigger); 
         
         //直接使用配置文件
 //        factory.setConfigLocation(new FileSystemResource(this.getClass().getResource("/quartz.properties").getPath()));
         return factory; 
     }
+	
+	@Bean(name = "scheduler")
+	public Scheduler getScheduler() throws IOException {
+		return schedulerFactoryBean().getScheduler();
+	}
 	
 	/**
 	 * 加载触发器
