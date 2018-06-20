@@ -1,6 +1,7 @@
 package com.ctsi.springboot.quartz.web;
 
 import org.apache.log4j.Logger;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +30,12 @@ public class IndexController {
 		printSpi.print(param);
 		
 		Task task = new Task();
-		taskSpi.addTask(task);
+		try {
+			taskSpi.addTask(task);
+		} 
+		catch (SchedulerException e) {
+			e.printStackTrace();
+		}
 		
 		return "OK";
 	}
@@ -39,7 +45,27 @@ public class IndexController {
 		log.info("## Index " + task.getName() + ", " + task.getCron() + ", " + task.getStatus());
 		
 //		Task task = new Task();
-		taskSpi.addTask(task);
+		try {
+			taskSpi.addTask(task);
+		} 
+		catch (SchedulerException e) {
+			e.printStackTrace();
+		}
+		
+		return "OK";
+	}
+	
+	@RequestMapping("/removeTask")
+	public String removeTask(Task task) {
+		log.info("## Index " + task.getName() + ", " + task.getStatus());
+		
+//		Task task = new Task();
+		try {
+			taskSpi.removeTask(task);
+		} 
+		catch (SchedulerException e) {
+			e.printStackTrace();
+		}
 		
 		return "OK";
 	}

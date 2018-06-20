@@ -73,7 +73,7 @@ public class QuartzConfig2 {
 	 * @param jobDetail
 	 * @return
 	 */
-	@Bean(name = "dialogJobTrigger")
+//	@Bean(name = "dialogJobTrigger")
 	public CronTriggerFactoryBean dialogStatusJobTrigger(
 			@Qualifier("updateDialogStatusJobDetail") JobDetail jobDetail) {
 		return dialogStatusTrigger(jobDetail, "0 0 0/1 * * ?");
