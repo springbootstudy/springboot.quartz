@@ -8,6 +8,7 @@ import java.util.Properties;
 import org.quartz.Job;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +29,9 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
  */
 @Configuration
 public class QuartzConfig2 {
+	
+	@Autowired
+	private SpringJobFactory springJobFactory;
 	
     private Properties quartzProperties() throws IOException {
         PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
@@ -53,6 +57,8 @@ public class QuartzConfig2 {
         factory.setQuartzProperties(quartzProperties());
         factory.setAutoStartup(true);
         factory.setApplicationContextSchedulerContextKey("applicationContext");
+        
+        factory.setJobFactory(springJobFactory);
         
         //注册触发器 
 //        factory.setTriggers(cronJobTrigger); 

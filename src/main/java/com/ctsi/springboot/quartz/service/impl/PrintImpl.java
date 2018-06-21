@@ -1,5 +1,8 @@
 package com.ctsi.springboot.quartz.service.impl;
 
+import java.util.Optional;
+import java.util.function.Consumer;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +16,19 @@ public class PrintImpl implements PrintSpi {
 
 	@Override
 	public PrintParam print(PrintParam param) {
-		log.info("## service impl exec" );
+		log.info("## service impl exec ");
 		
-		return null;
+		Optional<PrintParam> opt = Optional.ofNullable(param);
+		opt.ifPresent(new Consumer<PrintParam>() {
+
+			@Override
+			public void accept(PrintParam t) {
+				log.info("## " + t + ", " + t.getAppId() + ", " + t.getProjectId());
+			}
+			
+		});
+		
+		return param;
 	}
 
 }
